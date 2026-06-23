@@ -1,0 +1,120 @@
+.it-dashboard {
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #F7F8FA;
+    min-height: 100vh;
+}
+
+.it-loading {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; height: 60vh; gap: 16px;
+    color: #5F5E5A; font-size: 15px;
+}
+.it-spinner {
+    width: 40px; height: 40px;
+    border: 4px solid #E6F1FB;
+    border-top-color: #1A3A5C;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.it-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 20px;
+}
+.it-title {
+    font-size: 22px; font-weight: 600; color: #1A3A5C; margin: 0;
+}
+.it-subtitle {
+    font-size: 13px; color: #5F5E5A; margin: 2px 0 0;
+}
+.it-header-right {
+    display: flex; align-items: center; gap: 12px;
+}
+.it-refresh-btn {
+    padding: 6px 14px; border-radius: 6px; border: 1px solid #1A3A5C;
+    background: white; color: #1A3A5C; cursor: pointer; font-size: 13px;
+    &:hover { background: #1A3A5C; color: white; }
+}
+.it-date { font-size: 12px; color: #888780; }
+
+.it-kpi-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 16px;
+}
+.it-kpi-card {
+    background: white; border-radius: 10px; padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.it-kpi-label { font-size: 12px; color: #5F5E5A; margin-bottom: 8px; }
+.it-kpi-value {
+    font-size: 28px; font-weight: 600; color: #1A3A5C; line-height: 1;
+}
+.it-danger { color: #A32D2D !important; }
+.it-warning { color: #633806 !important; }
+
+.it-kpi-badge {
+    display: inline-block; margin-top: 8px; font-size: 11px;
+    padding: 2px 10px; border-radius: 99px; font-weight: 500;
+}
+.it-badge-info    { background: #E6F1FB; color: #0C447C; }
+.it-badge-danger  { background: #FCEBEB; color: #A32D2D; }
+.it-badge-warning { background: #FAEEDA; color: #633806; }
+.it-badge-ok      { background: #EAF3DE; color: #27500A; }
+.it-badge-urgent  { background: #FCEBEB; color: #A32D2D; font-weight: 600; }
+
+.it-charts-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 16px;
+}
+.it-card {
+    background: white; border-radius: 10px; padding: 16px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.it-card-title {
+    font-size: 13px; font-weight: 600; color: #1A3A5C;
+    margin-bottom: 14px;
+}
+
+.it-donut-wrap { display: flex; align-items: center; gap: 20px; }
+.it-legend { display: flex; flex-direction: column; gap: 8px; }
+.it-leg-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: #5F5E5A;
+    strong { margin-left: auto; color: #1A3A5C; }
+}
+.it-leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.it-bars-wrap { display: flex; flex-direction: column; gap: 10px; }
+.it-bar-row { display: flex; align-items: center; gap: 10px; }
+.it-bar-label { font-size: 12px; color: #5F5E5A; width: 90px; text-align: right; flex-shrink: 0; }
+.it-bar-track {
+    flex: 1; height: 8px; background: #F0F4F8;
+    border-radius: 4px; overflow: hidden;
+}
+.it-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.it-bar-count { font-size: 12px; color: #5F5E5A; min-width: 28px; text-align: right; }
+
+.it-alert-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 0; border-bottom: 1px solid #F0F4F8;
+    &:last-child { border-bottom: none; }
+}
+.it-alert-name { font-size: 13px; color: #1A3A5C; }
+.it-alert-meta  { font-size: 11px; color: #888780; margin-top: 2px; }
+.it-empty { font-size: 13px; color: #27500A; text-align: center; padding: 20px 0; }
+
+.it-site-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px solid #F0F4F8;
+    &:last-child { border-bottom: none; }
+}
+.it-site-name { font-size: 13px; color: #1A3A5C; min-width: 130px; }
+.it-site-bar-wrap { display: flex; align-items: center; gap: 8px; flex: 1; }
+
+.it-immob {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: #5F5E5A; margin-top: 12px;
+    strong { color: #1A3A5C; }
+}

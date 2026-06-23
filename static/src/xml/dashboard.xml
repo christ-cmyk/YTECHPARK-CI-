@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="it_parc.ItParcDashboard">
+        <div class="it-dashboard">
+
+            <t t-if="state.loading">
+                <div class="it-loading">
+                    <div class="it-spinner"/>
+                    <p>Chargement du tableau de bord...</p>
+                </div>
+            </t>
+
+            <t t-else="">
+                <div class="it-header">
+                    <div>
+                        <h2 class="it-title">IT Command Center</h2>
+                        <p class="it-subtitle">Tableau de bord — Direction des Systèmes d'Information</p>
+                    </div>
+                    <div class="it-header-right">
+                        <button class="it-refresh-btn" t-on-click="loadData">
+                            ↻ Actualiser
+                        </button>
+                        <span class="it-date" t-esc="state.currentDate"/>
+                    </div>
+                </div>
+
+                <div class="it-kpi-grid">
+                    <div class="it-kpi-card">
+                        <div class="it-kpi-label">📦 Total équipements</div>
+                        <div class="it-kpi-value" t-esc="state.data.total_eq"/>
+                        <div class="it-kpi-badge it-badge-info">
+                            +<t t-esc="state.data.eq_this_quarter"/> ce trimestre
+                        </div>
+                    </div>
+                    <div class="it-kpi-card">
+                        <div class="it-kpi-label">🔧 En maintenance</div>
+                        <div class="it-kpi-value it-danger" t-esc="state.data.maintenance_count"/>
+                        <div class="it-kpi-badge it-badge-danger">
+                            <t t-esc="state.data.maintenance_pct"/>% du parc
+                        </div>
+                    </div>
+                    <div class="it-kpi-card">
+                        <div class="it-kpi-label">🔔 Alertes actives</div>
+                        <div class="it-kpi-value it-warning" t-esc="state.data.alertes_open"/>
+                        <div class="it-kpi-badge it-badge-warning">
+                            <t t-esc="state.data.alertes_warranty"/> garanties ·
+                            <t t-esc="state.data.alertes_contract"/> contrats
+                        </div>
+                    </div>
+                    <div class="it-kpi-card">
+                        <div class="it-kpi-label">💰 Coût maintenance</div>
+                        <div class="it-kpi-value" t-esc="formatCost(state.data.total_cost)"/>
+                        <div class="it-kpi-badge it-badge-ok">FCFA · interventions terminées</div>
+                    </div>
+                </div>
+
+                <div class="it-charts-row">
+
+                    <div class="it-card">
+                        <div class="it-card-title">📊 Répartition par état</div>
+                        <div class="it-donut-wrap">
+                            <t t-call="it_parc.DonutChart"/>
+                            <div class="it-legend">
+                                <div class="it-leg-row">
+                                    <span class="it-leg-dot" style="background:#378ADD"/>
+                                    Affectés
+                                    <strong t-esc="state.data.states.assigned"/>
+                                </div>
+                                <div class="it-leg-row">
+                                    <span class="it-leg-dot" style="background:#E24B4A"/>
+                                    Maintenance
+                                    <strong t-esc="state.data.states.maintenance"/>
+                                </div>
+                                <div class="it-leg-row">
+                                    <span class="it-leg-dot" style="background:#EF9F27"/>
+                                    Brouillon
+                                    <strong t-esc="state.data.states.draft"/>
+                                </div>
+                                <div class="it-leg-row">
+                                    <span class="it-leg-dot" style="background:#888780"/>
+                                    Retirés
+                                    <strong t-esc="state.data.states.retired"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="it-card">
+                        <div class="it-card-title">📁 Équipements par catégorie</div>
+                        <div class="it-bars-wrap">
+                            <t t-foreach="state.data.categories" t-as="cat" t-key="cat_index">
+                                <div class="it-bar-row">
+                                    <span class="it-bar-label" t-esc="cat.name"/>
+                                    <div class="it-bar-track">
+                                        <div class="it-bar-fill"
+                                            t-attf-style="width: #{barWidth(cat.count)}%; background: #{barColor(cat_index)};"/>
+                                    </div>
+                                    <span class="it-bar-count" t-esc="cat.count"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="it-charts-row">
+
+                    <div class="it-card">
+                        <div class="it-card-title">🔴 Alertes prioritaires</div>
+                        <t t-if="state.data.alertes_list.length">
+                            <t t-foreach="state.data.alertes_list" t-as="al" t-key="al_index">
+                                <div class="it-alert-row">
+                                    <div>
+                                        <div class="it-alert-name" t-esc="al.name"/>
+                                        <div class="it-alert-meta">Expire le <t t-esc="al.date_expiry"/></div>
+                                    </div>
+                                    <span t-attf-class="it-badge it-badge-#{al.urgency}">
+                                        <t t-if="al.urgency === 'urgent'">Urgent</t>
+                                        <t t-elif="al.urgency === 'warning'">À traiter</t>
+                                        <t t-else="">OK</t>
+                                    </span>
+                                </div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <p class="it-empty">✅ Aucune alerte ouverte</p>
+                        </t>
+                    </div>
+
+                    <div class="it-card">
+                        <div class="it-card-title">📍 Répartition par site</div>
+                        <t t-foreach="state.data.sites_list" t-as="site" t-key="site_index">
+                            <div class="it-site-row">
+                                <span class="it-site-name" t-esc="site.name"/>
+                                <div class="it-site-bar-wrap">
+                                    <div class="it-bar-track">
+                                        <div class="it-bar-fill"
+                                            t-attf-style="width: #{barWidth(site.count)}%; background: #{siteColor(site_index)};"/>
+                                    </div>
+                                    <span class="it-bar-count" t-esc="site.count"/>
+                                </div>
+                            </div>
+                        </t>
+                        <div class="it-immob">
+                            <span>Taux d'immobilisation global</span>
+                            <strong t-esc="state.data.immobilisation_pct + '%'"/>
+                        </div>
+                        <div class="it-bar-track" style="margin-top:6px;">
+                            <div class="it-bar-fill"
+                                t-attf-style="width: #{state.data.immobilisation_pct}%; background:#E24B4A;"/>
+                        </div>
+                    </div>
+                </div>
+
+            </t>
+        </div>
+    </t>
+
+    <t t-name="it_parc.DonutChart">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+            <t t-set="total" t-value="state.data.total_eq or 1"/>
+            <t t-set="assigned" t-value="state.data.states.assigned or 0"/>
+            <t t-set="maint" t-value="state.data.states.maintenance or 0"/>
+            <t t-set="draft" t-value="state.data.states.draft or 0"/>
+            <t t-set="retired" t-value="state.data.states.retired or 0"/>
+            <t t-set="circ" t-value="251.2"/>
+            <t t-set="a1" t-value="assigned / total * circ"/>
+            <t t-set="a2" t-value="maint / total * circ"/>
+            <t t-set="a3" t-value="draft / total * circ"/>
+            <t t-set="a4" t-value="retired / total * circ"/>
+            <circle cx="60" cy="60" r="40" fill="none" stroke="#E6F1FB" stroke-width="18"/>
+            <circle cx="60" cy="60" r="40" fill="none" stroke="#378ADD" stroke-width="18"
+                t-attf-stroke-dasharray="#{a1} #{circ - a1}"
+                stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="40" fill="none" stroke="#E24B4A" stroke-width="18"
+                t-attf-stroke-dasharray="#{a2} #{circ - a2}"
+                t-attf-stroke-dashoffset="#{-a1}"
+                transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="40" fill="none" stroke="#EF9F27" stroke-width="18"
+                t-attf-stroke-dasharray="#{a3} #{circ - a3}"
+                t-attf-stroke-dashoffset="#{-(a1 + a2)}"
+                transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="40" fill="none" stroke="#888780" stroke-width="18"
+                t-attf-stroke-dasharray="#{a4} #{circ - a4}"
+                t-attf-stroke-dashoffset="#{-(a1 + a2 + a3)}"
+                transform="rotate(-90 60 60)"/>
+            <text x="60" y="55" text-anchor="middle" font-size="20" font-weight="bold"
+                fill="#1A3A5C" t-esc="total"/>
+            <text x="60" y="70" text-anchor="middle" font-size="10" fill="#888780">équip.</text>
+        </svg>
+    </t>
+
+</templates>
