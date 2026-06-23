@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_wizard_scan_alertes_form" model="ir.ui.view">
+        <field name="name">it.wizard.scan.alertes.form</field>
+        <field name="model">it.wizard.scan.alertes</field>
+        <field name="arch" type="xml">
+            <form string="Scan des alertes">
+                <group>
+                    <field name="delay_warranty"/>
+                    <field name="delay_contract"/>
+                </group>
+                <group>
+                    <field name="result_message" invisible="not result_message"/>
+                </group>
+                <footer>
+                    <button name="action_scan" type="object" string="Lancer le scan" class="btn-primary"/>
+                    <button string="Fermer" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_it_wizard_scan_alertes" model="ir.actions.act_window">
+        <field name="name">Lancer un scan manuel</field>
+        <field name="res_model">it.wizard.scan.alertes</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
