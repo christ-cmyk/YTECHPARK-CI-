@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_contrat_form" model="ir.ui.view">
+        <field name="name">it.contrat.form</field>
+        <field name="model">it.contrat</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_open_renouvellement_wizard" type="object" string="Renouveler" invisible="state not in ('active', 'expired')" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="state" readonly="1"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="days_remaining" readonly="1" decoration-danger="days_remaining &lt; 30"/>
+                        <field name="amount"/>
+                        <field name="equipment_ids" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_contrat_tree" model="ir.ui.view">
+        <field name="name">it.contrat.tree</field>
+        <field name="model">it.contrat</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="days_remaining &lt; 0" decoration-warning="days_remaining &lt; 30">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="days_remaining"/>
+                <field name="amount"/>
+                <field name="state" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_it_contrat_search" model="ir.ui.view">
+        <field name="name">it.contrat.search</field>
+        <field name="model">it.contrat</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="state_active" string="Actif" domain="[('state','=','active')]"/>
+                <filter name="state_expired" string="Expiré" domain="[('state','=','expired')]"/>
+                <filter name="state_renewed" string="Renouvelé" domain="[('state','=','renewed')]"/>
+                <separator/>
+                <filter name="group_partner" string="Fournisseur" context="{'group_by':'partner_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_it_contrat" model="ir.actions.act_window">
+        <field name="name">Contrats fournisseurs</field>
+        <field name="res_model">it.contrat</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_it_contrat_search"/>
+    </record>
+</odoo>

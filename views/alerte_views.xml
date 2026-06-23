@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_alerte_form" model="ir.ui.view">
+        <field name="name">it.alerte.form</field>
+        <field name="model">it.alerte</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_mark_done" type="object" string="Traiter" invisible="state != 'open'" class="btn-primary"/>
+                    <button name="action_ignore" type="object" string="Ignorer" invisible="state != 'open'" class="btn-default"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="type"/>
+                        <field name="state" readonly="1"/>
+                        <field name="equipment_id"/>
+                        <field name="contrat_id"/>
+                        <field name="date_expiry"/>
+                        <field name="days_before" readonly="1"/>
+                        <field name="user_id"/>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_alerte_tree" model="ir.ui.view">
+        <field name="name">it.alerte.tree</field>
+        <field name="model">it.alerte</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="days_before &lt; 7" decoration-warning="days_before &lt; 30">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="equipment_id"/>
+                <field name="contrat_id"/>
+                <field name="date_expiry"/>
+                <field name="days_before"/>
+                <field name="user_id"/>
+                <field name="state" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_it_alerte_search" model="ir.ui.view">
+        <field name="name">it.alerte.search</field>
+        <field name="model">it.alerte</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="type_warranty" string="Garantie" domain="[('type','=','warranty')]"/>
+                <filter name="type_contract" string="Contrat" domain="[('type','=','contract')]"/>
+                <separator/>
+                <filter name="state_open" string="Ouverte" domain="[('state','=','open')]"/>
+                <filter name="state_done" string="Traitée" domain="[('state','=','done')]"/>
+                <filter name="state_ignored" string="Ignorée" domain="[('state','=','ignored')]"/>
+                <field name="user_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_it_alerte" model="ir.actions.act_window">
+        <field name="name">Alertes</field>
+        <field name="res_model">it.alerte</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_it_alerte_search"/>
+    </record>
+</odoo>
