@@ -9,7 +9,7 @@ class Intervention(models.Model):
     _rec_name = 'name'
     _order = 'id desc'
 
-    name = fields.Char(required=True, default=lambda self: self._default_name())
+    name = fields.Char(required=True, default='Nouvelle intervention')
     equipment_id = fields.Many2one('it.equipment', required=True, ondelete='cascade')
     type = fields.Selection([
         ('corrective', 'Corrective'),
@@ -25,9 +25,6 @@ class Intervention(models.Model):
         ('planned', 'Planifiée'),
         ('done', 'Terminée'),
     ], default='planned', tracking=True)
-
-    def _default_name(self):
-        return f"Intervention — {fields.Datetime.now().strftime('%d/%m/%Y %H:%M')}"
 
     @api.constrains('date_start', 'date_end', 'state')
     def _check_dates(self):
