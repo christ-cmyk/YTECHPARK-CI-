@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_fiche_equipement" model="ir.actions.report">
+        <field name="name">Fiche équipement</field>
+        <field name="model">it.equipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_fiche_equipement_template</field>
+        <field name="report_file">it_parc.report_fiche_equipement_template</field>
+        <field name="binding_model_id" ref="model_it_equipment"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_fiche_equipement_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h2 style="color:#1A3A5C; border-bottom: 2px solid #1A3A5C; padding-bottom:8px;">
+                                    Fiche Équipement — <span t-field="o.name"/>
+                                </h2>
+                                <span class="badge" t-attf-style="background-color: #{
+                                    'draft' == o.state and '#6c757d' or
+                                    'assigned' == o.state and '#0d6efd' or
+                                    'maintenance' == o.state and '#dc3545' or
+                                    '#6c757d'}; color:white; padding:4px 12px; border-radius:4px; font-size:13px;">
+                                    <t t-esc="dict(o.fields_get(['state'])['state']['selection'])[o.state]"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <h4 style="color:#185FA5; margin-top:16px;">Informations générales</h4>
+                        <table class="table table-sm table-bordered">
+                            <tr><th style="width:35%; background:#f0f4f8;">Catégorie</th><td><span t-field="o.category_id"/></td></tr>
+                            <tr><th style="background:#f0f4f8;">Numéro de série</th><td><span t-field="o.serial_number"/></td></tr>
+                            <tr><th style="background:#f0f4f8;">Localisation</th><td><span t-field="o.location"/></td></tr>
+                            <tr><th style="background:#f0f4f8;">Employé affecté</th><td><span t-field="o.employee_id"/></td></tr>
+                            <tr><th style="background:#f0f4f8;">Département</th><td><span t-field="o.department_id"/></td></tr>
+                        </table>
+
+                        <h4 style="color:#185FA5; margin-top:16px;">Financier &amp; Garantie</h4>
+                        <table class="table table-sm table-bordered">
+                            <tr><th style="width:35%; background:#f0f4f8;">Valeur d'achat</th><td><span t-field="o.purchase_value" t-options='{"widget": "monetary", "display_currency": false}'/> FCFA</td></tr>
+                            <tr><th style="background:#f0f4f8;">Date d'achat</th><td><span t-field="o.purchase_date"/></td></tr>
+                            <tr><th style="background:#f0f4f8;">Fin de garantie</th><td><span t-field="o.warranty_date"/></td></tr>
+                        </table>
+
+                        <h4 style="color:#185FA5; margin-top:16px;">Historique des affectations</h4>
+                        <t t-if="o.affectation_ids">
+                            <table class="table table-sm table-bordered table-striped">
+                                <thead style="background:#1A3A5C; color:white;">
+                                    <tr>
+                                        <th>Employé</th>
+                                        <th>Département</th>
+                                        <th>Date début</th>
+                                        <th>Date fin</th>
+                                        <th>Motif</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.affectation_ids" t-as="aff">
+                                        <td><span t-field="aff.employee_id"/></td>
+                                        <td><span t-field="aff.department_id"/></td>
+                                        <td><span t-field="aff.date_start"/></td>
+                                        <td><span t-field="aff.date_end"/></td>
+                                        <td><span t-field="aff.reason"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p class="text-muted">Aucune affectation enregistrée.</p>
+                        </t>
+
+                        <h4 style="color:#185FA5; margin-top:16px;">Interventions</h4>
+                        <t t-if="o.intervention_ids">
+                            <table class="table table-sm table-bordered table-striped">
+                                <thead style="background:#1A3A5C; color:white;">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Technicien</th>
+                                        <th>Début</th>
+                                        <th>Fin</th>
+                                        <th>Durée (h)</th>
+                                        <th>Coût FCFA</th>
+                                        <th>État</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.intervention_ids" t-as="inv">
+                                        <td><span t-field="inv.type"/></td>
+                                        <td><span t-field="inv.technician_id"/></td>
+                                        <td><span t-field="inv.date_start"/></td>
+                                        <td><span t-field="inv.date_end"/></td>
+                                        <td><span t-field="inv.duration_hours"/></td>
+                                        <td><span t-field="inv.cost"/></td>
+                                        <td><span t-field="inv.state"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p class="text-muted">Aucune intervention enregistrée.</p>
+                        </t>
+
+                        <t t-if="o.notes">
+                            <h4 style="color:#185FA5; margin-top:16px;">Notes techniques</h4>
+                            <p><span t-field="o.notes"/></p>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

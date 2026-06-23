@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_maintenances" model="ir.actions.report">
+        <field name="name">Historique des maintenances</field>
+        <field name="model">it.intervention</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_maintenances_template</field>
+        <field name="report_file">it_parc.report_maintenances_template</field>
+        <field name="binding_model_id" ref="model_it_intervention"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_maintenances_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 style="color:#1A3A5C; border-bottom:2px solid #1A3A5C; padding-bottom:8px;">
+                        Historique des Maintenances
+                    </h2>
+                    <p class="text-muted">
+                        Généré le : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y à %H:%M')"/>
+                        — <strong><t t-esc="len(docs)"/> intervention(s)</strong>
+                    </p>
+
+                    <table class="table table-sm table-bordered table-striped" style="font-size:11px;">
+                        <thead style="background:#1A3A5C; color:white;">
+                            <tr>
+                                <th>#</th>
+                                <th>Équipement</th>
+                                <th>Type</th>
+                                <th>Technicien</th>
+                                <th>Début</th>
+                                <th>Fin</th>
+                                <th>Durée (h)</th>
+                                <th>Coût (FCFA)</th>
+                                <th>État</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="o">
+                                <td><t t-esc="o_index + 1"/></td>
+                                <td><span t-field="o.equipment_id"/></td>
+                                <td><span t-field="o.type"/></td>
+                                <td><span t-field="o.technician_id"/></td>
+                                <td><span t-field="o.date_start"/></td>
+                                <td><span t-field="o.date_end"/></td>
+                                <td><span t-field="o.duration_hours"/></td>
+                                <td><span t-field="o.cost"/></td>
+                                <td><span t-field="o.state"/></td>
+                            </tr>
+                        </tbody>
+                        <tfoot style="background:#f0f4f8; font-weight:bold;">
+                            <tr>
+                                <td colspan="6" style="text-align:right;">TOTAL</td>
+                                <td>
+                                    <t t-esc="'%.2f' % sum(docs.mapped('duration_hours'))"/>
+                                </td>
+                                <td>
+                                    <t t-esc="'{:,.0f}'.format(sum(docs.mapped('cost')))"/> FCFA
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <h4 style="color:#185FA5; margin-top:24px;">Résumé par type d'intervention</h4>
+                    <table class="table table-sm table-bordered" style="width:50%;">
+                        <thead style="background:#1A3A5C; color:white;">
+                            <tr><th>Type</th><th>Nombre</th><th>Coût total (FCFA)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Corrective</td>
+                                <td><t t-esc="len(docs.filtered(lambda i: i.type == 'corrective'))"/></td>
+                                <td><t t-esc="'{:,.0f}'.format(sum(docs.filtered(lambda i: i.type == 'corrective').mapped('cost')))"/></td>
+                            </tr>
+                            <tr>
+                                <td>Préventive</td>
+                                <td><t t-esc="len(docs.filtered(lambda i: i.type == 'preventive'))"/></td>
+                                <td><t t-esc="'{:,.0f}'.format(sum(docs.filtered(lambda i: i.type == 'preventive').mapped('cost')))"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
