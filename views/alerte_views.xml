@@ -6,9 +6,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="state" widget="statusbar"/>
-                    <button name="action_mark_done" type="object" string="Traiter" invisible="state != 'open'" class="btn-primary"/>
-                    <button name="action_ignore" type="object" string="Ignorer" invisible="state != 'open'" class="btn-default"/>
+                    <field name="state" widget="statusbar" statusbar_clickable="1"/>
                 </header>
                 <sheet>
                     <group>
@@ -37,6 +35,9 @@
         <field name="model">it.alerte</field>
         <field name="arch" type="xml">
             <list decoration-danger="days_before &lt; 7" decoration-warning="days_before &lt; 30">
+                <header>
+                    <button name="%(action_it_wizard_scan_alertes)d" type="action" string="🔍 Scanner maintenant" class="btn-warning"/>
+                </header>
                 <field name="name"/>
                 <field name="type"/>
                 <field name="equipment_id"/>

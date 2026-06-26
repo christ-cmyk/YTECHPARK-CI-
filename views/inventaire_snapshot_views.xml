@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_inventaire_snapshot_form" model="ir.ui.view">
+        <field name="name">it.inventaire.snapshot.form</field>
+        <field name="model">it.inventaire.snapshot</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_generate_snapshot" type="object" string="Générer le snapshot" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date_snapshot"/>
+                        <field name="created_by"/>
+                    </group>
+                    <group>
+                        <field name="total_equipment"/>
+                        <field name="total_assigned"/>
+                        <field name="total_maintenance"/>
+                        <field name="total_retired"/>
+                        <field name="total_draft"/>
+                        <field name="total_value"/>
+                    </group>
+                    <notebook>
+                        <page string="Détail">
+                            <field name="line_ids">
+                                <list decoration-danger="state == 'maintenance'" decoration-muted="state == 'retired'">
+                                    <field name="name"/>
+                                    <field name="serial_number"/>
+                                    <field name="category"/>
+                                    <field name="employee"/>
+                                    <field name="department"/>
+                                    <field name="location"/>
+                                    <field name="state"/>
+                                    <field name="purchase_value"/>
+                                    <field name="warranty_date"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_it_inventaire_snapshot_tree" model="ir.ui.view">
+        <field name="name">it.inventaire.snapshot.tree</field>
+        <field name="model">it.inventaire.snapshot</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date_snapshot"/>
+                <field name="created_by"/>
+                <field name="total_equipment"/>
+                <field name="total_value" string="Valeur totale (FCFA)"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_it_inventaire_snapshot" model="ir.actions.act_window">
+        <field name="name">Historique inventaires</field>
+        <field name="res_model">it.inventaire.snapshot</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

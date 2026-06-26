@@ -27,12 +27,14 @@ python odoo-bin -c odoo.conf -u it_parc -d <votre_base>
 | F01 | Équipements | Workflow 4 états : Brouillon → Affecté → Maintenance → Retiré |
 | F02 | Affectations | Historique complet par équipement avec wizard de réaffectation |
 | F03 | Interventions | Suivi corrective/préventive, durée auto, vue calendrier |
-| F04 | Contrats | Suivi fournisseurs, jours restants, wizard renouvellement |
-| F05 | Alertes | Scan auto (ir.cron) + scan manuel, garanties et contrats |
-| F06 | Import CSV | Chargement en masse, détection doublons, rapport d'import |
-| F07 | Rapports PDF | 3 rapports QWeb : fiche équipement, inventaire, maintenances |
-| F08 | Exports Excel | 3 exports xlsxwriter avec couleurs conditionnelles |
-| F09 | Dashboard OWL | IT Command Center : 4 KPIs, donut chart, barres, alertes |
+| F04 | Contrats | Suivi fournisseurs, jours restants, wizard renouvellement avec blocage 5j |
+| F05 | Licences logicielles | Gestion des licences par équipement, type, expiration |
+| F06 | Alertes | Scan auto (ir.cron) + scan manuel, garanties et contrats |
+| F07 | Snapshots inventaire | Capture instantanée de l'état du parc avec historique |
+| F08 | Import CSV | Chargement en masse, détection doublons, rapport d'import |
+| F09 | Rapports PDF | 4 rapports QWeb : fiche équipement, inventaire, maintenances, reçu contrat |
+| F10 | Exports Excel | 3 exports xlsxwriter avec couleurs conditionnelles |
+| F11 | Dashboard OWL | IT Command Center : 4 KPIs, donut chart, barres, alertes |
 
 ### Groupes de sécurité
 | Groupe | Droits |
@@ -47,10 +49,10 @@ it_parc/
 ├── __init__.py
 ├── __manifest__.py
 ├── README.md
-├── models/          # 5 modèles Python (equipment, affectation, intervention, contrat, alerte)
+├── models/          # 7 modèles Python (equipment, affectation, intervention, contrat, alerte, licence, inventaire_snapshot)
 ├── views/           # Vues XML + menus + action dashboard
-├── wizards/         # 4 wizards (réaffectation, renouvellement, scan alertes, import CSV)
-├── report/          # 3 rapports QWeb PDF
+├── wizards/         # 6 wizards (réaffectation, renouvellement, scan alertes, import CSV, rapport inventaire, rapport maintenances)
+├── report/          # 4 rapports QWeb PDF
 ├── security/        # Groupes + ACLs
 ├── data/            # Cron + données démo
 ├── controllers/     # Exports Excel (HTTP) + dashboard (JSON-RPC)

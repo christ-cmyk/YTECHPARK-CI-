@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
 
-    <!-- =========================== -->
-    <!-- CATÉGORIES D'ÉQUIPEMENT      -->
-    <!-- =========================== -->
+    <!-- ============================================================ -->
+    <!-- CATÉGORIES D'ÉQUIPEMENT                                       -->
+    <!-- ============================================================ -->
     <record id="cat_poste" model="it.equipment.category">
         <field name="name">Poste de travail</field>
         <field name="description">Ordinateurs fixes et portables</field>
@@ -24,10 +24,22 @@
         <field name="name">Téléphone IP</field>
         <field name="description">Téléphones VoIP et accessoires</field>
     </record>
+    <record id="cat_ups" model="it.equipment.category">
+        <field name="name">UPS / Onduleur</field>
+        <field name="description">Onduleurs et alimentations secourues</field>
+    </record>
+    <record id="cat_tablette" model="it.equipment.category">
+        <field name="name">Tablette</field>
+        <field name="description">Tablettes tactiles professionnelles</field>
+    </record>
+    <record id="cat_routeur" model="it.equipment.category">
+        <field name="name">Routeur</field>
+        <field name="description">Routeurs et équipements WAN</field>
+    </record>
 
-    <!-- =========================== -->
-    <!-- DÉPARTEMENTS (hr.department) -->
-    <!-- =========================== -->
+    <!-- ============================================================ -->
+    <!-- DÉPARTEMENTS (hr.department)                                  -->
+    <!-- ============================================================ -->
     <record id="dep_dsi" model="hr.department">
         <field name="name">Direction des Systèmes d'Information</field>
         <field name="note">Gère l'infrastructure IT, le réseau et le parc informatique</field>
@@ -40,135 +52,146 @@
         <field name="name">Direction Générale</field>
         <field name="note">Cabinet de la direction</field>
     </record>
+    <record id="dep_finance" model="hr.department">
+        <field name="name">Direction Financière</field>
+        <field name="note">Gestion financière et comptabilité</field>
+    </record>
+    <record id="dep_rh" model="hr.department">
+        <field name="name">Ressources Humaines</field>
+        <field name="note">Gestion du personnel et paie</field>
+    </record>
 
-    <!-- =========================== -->
-    <!-- EMPLOYÉS (hr.employee)       -->
-    <!-- =========================== -->
+    <!-- ============================================================ -->
+    <!-- EMPLOYÉS (hr.employee)                                        -->
+    <!-- ============================================================ -->
     <record id="emp_kone" model="hr.employee">
         <field name="name">Koné Ibrahim</field>
         <field name="job_title">Technicien Support IT</field>
         <field name="department_id" ref="dep_dsi"/>
-        <field name="work_email">i.kone@entreprise.ci</field>
+        <field name="work_email">i.kone@techpark.ci</field>
         <field name="work_phone">+225 05 01 01 01</field>
     </record>
     <record id="emp_diallo" model="hr.employee">
         <field name="name">Diallo Aïchatou</field>
         <field name="job_title">Responsable IT</field>
         <field name="department_id" ref="dep_dsi"/>
-        <field name="work_email">a.diallo@entreprise.ci</field>
+        <field name="work_email">a.diallo@techpark.ci</field>
         <field name="work_phone">+225 05 02 02 02</field>
     </record>
     <record id="emp_kouame" model="hr.employee">
         <field name="name">Kouamé Paul</field>
         <field name="job_title">Commercial</field>
         <field name="department_id" ref="dep_commercial"/>
-        <field name="work_email">p.kouame@entreprise.ci</field>
+        <field name="work_email">p.kouame@techpark.ci</field>
         <field name="work_phone">+225 05 03 03 03</field>
     </record>
     <record id="emp_nguessan" model="hr.employee">
         <field name="name">N'Guessan Jean</field>
         <field name="job_title">Technicien Réseau</field>
         <field name="department_id" ref="dep_dsi"/>
-        <field name="work_email">j.nguessan@entreprise.ci</field>
+        <field name="work_email">j.nguessan@techpark.ci</field>
         <field name="work_phone">+225 05 04 04 04</field>
     </record>
     <record id="emp_bamba" model="hr.employee">
         <field name="name">Bamba Fatou</field>
         <field name="job_title">Technicienne Maintenance</field>
         <field name="department_id" ref="dep_dsi"/>
-        <field name="work_email">f.bamba@entreprise.ci</field>
+        <field name="work_email">f.bamba@techpark.ci</field>
         <field name="work_phone">+225 05 05 05 05</field>
     </record>
     <record id="emp_yao" model="hr.employee">
         <field name="name">Yao Christ Uriel</field>
         <field name="job_title">Directeur Général</field>
         <field name="department_id" ref="dep_generale"/>
-        <field name="work_email">christ.yao@entreprise.ci</field>
+        <field name="work_email">christ.yao@techpark.ci</field>
         <field name="work_phone">+225 05 99 99 99</field>
     </record>
+    <record id="emp_soro" model="hr.employee">
+        <field name="name">Soro Moussa</field>
+        <field name="job_title">Comptable</field>
+        <field name="department_id" ref="dep_finance"/>
+        <field name="work_email">m.soro@techpark.ci</field>
+        <field name="work_phone">+225 05 06 06 06</field>
+    </record>
+    <record id="emp_toure" model="hr.employee">
+        <field name="name">Touré Aminata</field>
+        <field name="job_title">Responsable RH</field>
+        <field name="department_id" ref="dep_rh"/>
+        <field name="work_email">a.toure@techpark.ci</field>
+        <field name="work_phone">+225 05 07 07 07</field>
+    </record>
 
-    <!-- =========================== -->
-    <!-- ÉQUIPEMENTS                  -->
-    <!-- =========================== -->
+    <!-- ============================================================ -->
+    <!-- ÉQUIPEMENTS (15)                                              -->
+    <!-- Répartition : 8 affectés / 3 maintenance / 2 brouillon / 2 retirés -->
+    <!-- Sites : Abidjan-Cocody (siège), Abidjan-Plateau, Antenne Bouaké -->
+    <!-- ============================================================ -->
 
-    <!-- eq_001 — Dell OptiPlex 7090 — poste direction commerciale -->
+    <!-- == ASSIGNED (8) == -->
+
+    <!-- eq_001 — Dell OptiPlex — affecté à Kouamé — garantie +5 jours (URGENT) -->
     <record id="eq_001" model="it.equipment">
         <field name="name">Dell OptiPlex 7090</field>
         <field name="category_id" ref="cat_poste"/>
         <field name="serial_number">SN-DELL-00412</field>
         <field name="purchase_date">2022-03-15</field>
-        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=8)).strftime('%Y-%m-%d')"/>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=5)).strftime('%Y-%m-%d')"/>
         <field name="purchase_value">485000</field>
         <field name="employee_id" ref="emp_kouame"/>
         <field name="department_id" ref="dep_commercial"/>
         <field name="location">Abidjan-Cocody (siège)</field>
         <field name="state">assigned</field>
-        <field name="notes">Poste direction commerciale. SSD 512Go, 16Go RAM.</field>
+        <field name="notes">Poste direction commerciale. SSD 512Go, 16Go RAM. Garantie expire dans 5 jours.</field>
     </record>
 
-    <!-- eq_002 — HP ProBook 450 G9 — technicien réseau, en maintenance -->
-    <record id="eq_002" model="it.equipment">
-        <field name="name">HP ProBook 450 G9</field>
-        <field name="category_id" ref="cat_poste"/>
-        <field name="serial_number">SN-HP-00287</field>
-        <field name="purchase_date">2023-01-10</field>
-        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=21)).strftime('%Y-%m-%d')"/>
-        <field name="purchase_value">620000</field>
-        <field name="employee_id" ref="emp_nguessan"/>
-        <field name="department_id" ref="dep_dsi"/>
-        <field name="location">Abidjan-Cocody (siège)</field>
-        <field name="state">maintenance</field>
-        <field name="notes">Laptop technicien réseau. Batterie défectueuse, remplacement en cours.</field>
-    </record>
-
-    <!-- eq_003 — Dell PowerEdge R740 — serveur production principal -->
+    <!-- eq_003 — Dell PowerEdge R740 — serveur production — garantie +90 jours (OK) -->
     <record id="eq_003" model="it.equipment">
         <field name="name">Dell PowerEdge R740</field>
         <field name="category_id" ref="cat_serveur"/>
         <field name="serial_number">SN-SRV-00101</field>
         <field name="purchase_date">2021-06-01</field>
-        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=95)).strftime('%Y-%m-%d')"/>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=90)).strftime('%Y-%m-%d')"/>
         <field name="purchase_value">3200000</field>
         <field name="department_id" ref="dep_dsi"/>
         <field name="location">Abidjan-Cocody (siège)</field>
         <field name="state">assigned</field>
-        <field name="notes">Serveur principal de production. RAID 10 (6×600Go SAS).</field>
+        <field name="notes">Serveur principal de production. RAID 10 (6x600Go SAS). Garantie OK (90j).</field>
     </record>
 
-    <!-- eq_004 — Cisco Catalyst 2960-X — switch coeur réseau -->
+    <!-- eq_004 — Cisco Catalyst 2960-X — switch cœur Plateau — garantie EXPIRÉE (-30j) -->
     <record id="eq_004" model="it.equipment">
         <field name="name">Cisco Catalyst 2960-X</field>
         <field name="category_id" ref="cat_reseau"/>
         <field name="serial_number">SN-CSC-00334</field>
         <field name="purchase_date">2020-09-20</field>
-        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=45)).strftime('%Y-%m-%d')"/>
+        <field name="warranty_date" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
         <field name="purchase_value">1450000</field>
         <field name="department_id" ref="dep_dsi"/>
         <field name="location">Abidjan-Plateau</field>
         <field name="state">assigned</field>
-        <field name="notes">Switch cœur de réseau site Plateau. 48 ports PoE+.</field>
+        <field name="notes">Switch cœur de réseau site Plateau. 48 ports PoE+. Garantie expirée depuis 30j.</field>
     </record>
 
-    <!-- eq_005 — HP LaserJet Pro M428 — imprimante RH -->
+    <!-- eq_005 — HP LaserJet Pro M428 — imprimante RH — garantie +365 jours -->
     <record id="eq_005" model="it.equipment">
         <field name="name">HP LaserJet Pro M428</field>
         <field name="category_id" ref="cat_imprimante"/>
         <field name="serial_number">SN-HPP-00521</field>
         <field name="purchase_date">2022-11-05</field>
-        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=180)).strftime('%Y-%m-%d')"/>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=365)).strftime('%Y-%m-%d')"/>
         <field name="purchase_value">320000</field>
         <field name="location">Abidjan-Cocody (siège)</field>
         <field name="state">assigned</field>
         <field name="notes">Imprimante multifonction RH. Recto-verso automatique, scan réseau.</field>
     </record>
 
-    <!-- eq_006 — Lenovo ThinkPad X1 Carbon — poste DG -->
+    <!-- eq_006 — Lenovo ThinkPad X1 Carbon — poste DG Plateau — garantie +500 jours -->
     <record id="eq_006" model="it.equipment">
         <field name="name">Lenovo ThinkPad X1 Carbon Gen 11</field>
         <field name="category_id" ref="cat_poste"/>
         <field name="serial_number">SN-LNV-00198</field>
         <field name="purchase_date">2023-05-22</field>
-        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=365)).strftime('%Y-%m-%d')"/>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=500)).strftime('%Y-%m-%d')"/>
         <field name="purchase_value">890000</field>
         <field name="employee_id" ref="emp_yao"/>
         <field name="department_id" ref="dep_generale"/>
@@ -177,7 +200,7 @@
         <field name="notes">Laptop direction générale. i7-1365U / 16Go RAM / 512Go SSD.</field>
     </record>
 
-    <!-- eq_007 — Yealink T54W — téléphone IP Bouaké -->
+    <!-- eq_007 — Yealink T54W — téléphone IP Bouaké — garantie +730 jours -->
     <record id="eq_007" model="it.equipment">
         <field name="name">Yealink T54W</field>
         <field name="category_id" ref="cat_telephone"/>
@@ -190,33 +213,110 @@
         <field name="notes">Téléphone IP réception Bouaké. Wi-Fi intégré.</field>
     </record>
 
-    <!-- eq_008 — HP ProLiant DL380 Gen10 — serveur backup en maintenance -->
-    <record id="eq_008" model="it.equipment">
-        <field name="name">HP ProLiant DL380 Gen10</field>
-        <field name="category_id" ref="cat_serveur"/>
-        <field name="serial_number">SN-SRV-00205</field>
-        <field name="purchase_date">2020-02-14</field>
-        <field name="warranty_date" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
-        <field name="purchase_value">2800000</field>
-        <field name="department_id" ref="dep_dsi"/>
-        <field name="location">Antenne Bouaké</field>
-        <field name="state">maintenance</field>
-        <field name="notes">Serveur backup Bouaké. Garantie expirée. Disque dur défectueux (remplacement en cours).</field>
-    </record>
-
-    <!-- eq_009 — Fortinet FortiGate 60F — pare-feu principal -->
+    <!-- eq_009 — Fortinet FortiGate 60F — pare-feu siège — garantie +90 jours (OK) -->
     <record id="eq_009" model="it.equipment">
         <field name="name">Fortinet FortiGate 60F</field>
         <field name="category_id" ref="cat_reseau"/>
         <field name="serial_number">SN-FTN-00089</field>
         <field name="purchase_date">2022-08-30</field>
-        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=500)).strftime('%Y-%m-%d')"/>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=90)).strftime('%Y-%m-%d')"/>
         <field name="purchase_value">1850000</field>
         <field name="department_id" ref="dep_dsi"/>
         <field name="location">Abidjan-Cocody (siège)</field>
         <field name="state">assigned</field>
-        <field name="notes">Pare-feu principal siège. UTM, IPS, antivirus activés.</field>
+        <field name="notes">Pare-feu principal siège. UTM, IPS, antivirus activés. Garantie OK (90j).</field>
     </record>
+
+    <!-- eq_011 — HP EliteBook 845 G10 — affecté à Koné — garantie +20 jours (WARNING) -->
+    <record id="eq_011" model="it.equipment">
+        <field name="name">HP EliteBook 845 G10</field>
+        <field name="category_id" ref="cat_poste"/>
+        <field name="serial_number">SN-HP-00845</field>
+        <field name="purchase_date">2024-01-15</field>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=20)).strftime('%Y-%m-%d')"/>
+        <field name="purchase_value">750000</field>
+        <field name="employee_id" ref="emp_kone"/>
+        <field name="department_id" ref="dep_dsi"/>
+        <field name="location">Abidjan-Plateau</field>
+        <field name="state">assigned</field>
+        <field name="notes">Portable technicien support. AMD Ryzen 7, 16Go RAM, 512Go SSD. Garantie expire dans 20j.</field>
+    </record>
+
+    <!-- == MAINTENANCE (3) == -->
+
+    <!-- eq_002 — HP ProBook 450 G9 — en maintenance — garantie +20 jours (WARNING) -->
+    <record id="eq_002" model="it.equipment">
+        <field name="name">HP ProBook 450 G9</field>
+        <field name="category_id" ref="cat_poste"/>
+        <field name="serial_number">SN-HP-00287</field>
+        <field name="purchase_date">2023-01-10</field>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=20)).strftime('%Y-%m-%d')"/>
+        <field name="purchase_value">620000</field>
+        <field name="employee_id" ref="emp_nguessan"/>
+        <field name="department_id" ref="dep_dsi"/>
+        <field name="location">Abidjan-Cocody (siège)</field>
+        <field name="state">maintenance</field>
+        <field name="notes">Laptop technicien réseau. Batterie défectueuse, remplacement en cours.</field>
+    </record>
+
+    <!-- eq_008 — HP ProLiant DL380 Gen10 — serveur backup Bouaké — garantie EXPIRÉE (-60j) -->
+    <record id="eq_008" model="it.equipment">
+        <field name="name">HP ProLiant DL380 Gen10</field>
+        <field name="category_id" ref="cat_serveur"/>
+        <field name="serial_number">SN-SRV-00205</field>
+        <field name="purchase_date">2020-02-14</field>
+        <field name="warranty_date" eval="(DateTime.now() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
+        <field name="purchase_value">2800000</field>
+        <field name="department_id" ref="dep_dsi"/>
+        <field name="location">Antenne Bouaké</field>
+        <field name="state">maintenance</field>
+        <field name="notes">Serveur backup Bouaké. Garantie expirée depuis 60j. Remplacement disque dur en cours.</field>
+    </record>
+
+    <!-- eq_013 — Dell Latitude 5540 — en maintenance — garantie +5 jours (URGENT) -->
+    <record id="eq_013" model="it.equipment">
+        <field name="name">Dell Latitude 5540</field>
+        <field name="category_id" ref="cat_poste"/>
+        <field name="serial_number">SN-DELL-05540</field>
+        <field name="purchase_date">2024-06-01</field>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=5)).strftime('%Y-%m-%d')"/>
+        <field name="purchase_value">680000</field>
+        <field name="employee_id" ref="emp_diallo"/>
+        <field name="department_id" ref="dep_dsi"/>
+        <field name="location">Abidjan-Plateau</field>
+        <field name="state">maintenance</field>
+        <field name="notes">Laptop responsable IT. Écran endommagé. Garantie expire dans 5 jours — intervention urgente.</field>
+    </record>
+
+    <!-- == DRAFT (2) == -->
+
+    <!-- eq_014 — Samsung Galaxy Tab S9 — brouillon, pas encore affecté -->
+    <record id="eq_014" model="it.equipment">
+        <field name="name">Samsung Galaxy Tab S9</field>
+        <field name="category_id" ref="cat_tablette"/>
+        <field name="serial_number">SN-SAM-00999</field>
+        <field name="purchase_date">2025-11-20</field>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=730)).strftime('%Y-%m-%d')"/>
+        <field name="purchase_value">450000</field>
+        <field name="location">Abidjan-Cocody (siège)</field>
+        <field name="state">draft</field>
+        <field name="notes">Tablette numérique reçue en novembre 2025. Affectation en attente. 128Go, S-Pen inclus.</field>
+    </record>
+
+    <!-- eq_015 — APC Smart-UPS 1500 — brouillon, en attente d'installation -->
+    <record id="eq_015" model="it.equipment">
+        <field name="name">APC Smart-UPS 1500VA</field>
+        <field name="category_id" ref="cat_ups"/>
+        <field name="serial_number">SN-APC-01500</field>
+        <field name="purchase_date">2025-12-01</field>
+        <field name="warranty_date" eval="(DateTime.now() + timedelta(days=365)).strftime('%Y-%m-%d')"/>
+        <field name="purchase_value">350000</field>
+        <field name="location">Abidjan-Plateau</field>
+        <field name="state">draft</field>
+        <field name="notes">Onduleur neuf reçu. Installation prévue salle serveur Plateau. Autonomie : 30 min.</field>
+    </record>
+
+    <!-- == RETIRED (2) == -->
 
     <!-- eq_010 — Acer Veriton M4690G — poste retraité -->
     <record id="eq_010" model="it.equipment">
@@ -224,16 +324,28 @@
         <field name="category_id" ref="cat_poste"/>
         <field name="serial_number">SN-ACR-00743</field>
         <field name="purchase_date">2019-04-08</field>
-        <field name="warranty_date" eval="(DateTime.now() - timedelta(days=180)).strftime('%Y-%m-%d')"/>
         <field name="purchase_value">280000</field>
         <field name="location">Abidjan-Cocody (siège)</field>
         <field name="state">retired</field>
         <field name="notes">Poste retraité en mars 2022. Remplacé par Dell OptiPlex 7090.</field>
     </record>
 
-    <!-- =========================== -->
-    <!-- AFFECTATIONS                 -->
-    <!-- =========================== -->
+    <!-- eq_012 — Cisco ISR 4321 — routeur retraité Bouaké — garantie EXPIRÉE (-90j) -->
+    <record id="eq_012" model="it.equipment">
+        <field name="name">Cisco ISR 4321</field>
+        <field name="category_id" ref="cat_routeur"/>
+        <field name="serial_number">SN-CSC-04321</field>
+        <field name="purchase_date">2019-11-15</field>
+        <field name="warranty_date" eval="(DateTime.now() - timedelta(days=90)).strftime('%Y-%m-%d')"/>
+        <field name="purchase_value">1200000</field>
+        <field name="location">Antenne Bouaké</field>
+        <field name="state">retired</field>
+        <field name="notes">Routeur WAN retraité. Remplacé par nouveau routeur CISCO ISR 1100 en janvier 2026.</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- AFFECTATIONS                                                  -->
+    <!-- ============================================================ -->
 
     <!-- eq_001 → Kouamé Paul → Commercial (actuelle) -->
     <record id="affect_001_a" model="it.affectation">
@@ -273,9 +385,27 @@
         <field name="reason">Poste attribué à la direction générale</field>
     </record>
 
-    <!-- =========================== -->
-    <!-- FOURNISSEURS (res.partner)   -->
-    <!-- =========================== -->
+    <!-- eq_011 → Koné Ibrahim → DSI (actuelle) -->
+    <record id="affect_011_a" model="it.affectation">
+        <field name="equipment_id" ref="eq_011"/>
+        <field name="employee_id" ref="emp_kone"/>
+        <field name="department_id" ref="dep_dsi"/>
+        <field name="date_start">2024-02-01</field>
+        <field name="reason">Portable attribué au technicien support IT</field>
+    </record>
+
+    <!-- eq_013 → Diallo Aïchatou → DSI (actuelle, en maintenance) -->
+    <record id="affect_013_a" model="it.affectation">
+        <field name="equipment_id" ref="eq_013"/>
+        <field name="employee_id" ref="emp_diallo"/>
+        <field name="department_id" ref="dep_dsi"/>
+        <field name="date_start">2024-06-15</field>
+        <field name="reason">Laptop attribué à la responsable IT</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- FOURNISSEURS (res.partner)                                    -->
+    <!-- ============================================================ -->
     <record id="partner_dell" model="res.partner">
         <field name="name">Dell Côte d'Ivoire</field>
         <field name="email">ventes@dell.ci</field>
@@ -302,34 +432,34 @@
         <field name="phone">+225 27 22 48 50 50</field>
     </record>
 
-    <!-- =========================== -->
-    <!-- CONTRATS FOURNISSEURS        -->
-    <!-- =========================== -->
+    <!-- ============================================================ -->
+    <!-- CONTRATS FOURNISSEURS (5)                                     -->
+    <!-- ============================================================ -->
 
-    <!-- contrat_001 — Support Dell — expire dans 12 jours (urgence) -->
+    <!-- contrat_001 — Support Dell — expire dans 3 jours (CRITIQUE) -->
     <record id="contrat_001" model="it.contrat">
         <field name="name">Contrat Support Dell ProSupport</field>
         <field name="partner_id" ref="partner_dell"/>
         <field name="date_start">2024-01-01</field>
-        <field name="date_end" eval="(DateTime.now() + timedelta(days=12)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.now() + timedelta(days=3)).strftime('%Y-%m-%d')"/>
         <field name="amount">2400000</field>
         <field name="state">active</field>
-        <field name="notes">Couverture 3 serveurs Dell. Support 24/7 Next Business Day.</field>
+        <field name="notes">CRITIQUE : Couverture 3 serveurs Dell. Support 24/7 Next Business Day. Expire dans 3 jours.</field>
         <field name="equipment_ids" eval="[(4, ref('eq_003')), (4, ref('eq_008'))]"/>
     </record>
 
-    <!-- contrat_002 — Microsoft 365 — expire dans 28 jours (attention) -->
+    <!-- contrat_002 — Microsoft 365 — expire dans 25 jours (WARNING) -->
     <record id="contrat_002" model="it.contrat">
         <field name="name">Licence Microsoft 365 Business Standard</field>
         <field name="partner_id" ref="partner_microsoft"/>
         <field name="date_start">2025-07-01</field>
-        <field name="date_end" eval="(DateTime.now() + timedelta(days=28)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.now() + timedelta(days=25)).strftime('%Y-%m-%d')"/>
         <field name="amount">3600000</field>
         <field name="state">active</field>
-        <field name="notes">85 licences M365 Business Standard. Renouvellement annuel.</field>
+        <field name="notes">WARNING : 85 licences M365 Business Standard. Renouvellement annuel. Expire dans 25 jours.</field>
     </record>
 
-    <!-- contrat_003 — Cisco SmartNet — expire dans 55 jours -->
+    <!-- contrat_003 — Cisco SmartNet — expire dans 55 jours (À SURVEILLER) -->
     <record id="contrat_003" model="it.contrat">
         <field name="name">Contrat Maintenance Cisco SmartNet</field>
         <field name="partner_id" ref="partner_cisco"/>
@@ -337,39 +467,42 @@
         <field name="date_end" eval="(DateTime.now() + timedelta(days=55)).strftime('%Y-%m-%d')"/>
         <field name="amount">1800000</field>
         <field name="state">active</field>
-        <field name="notes">Couverture équipements réseau Cisco. Support TAC 24/7.</field>
-        <field name="equipment_ids" eval="[(4, ref('eq_004'))]"/>
+        <field name="notes">À SURVEILLER : Couverture équipements réseau Cisco. Support TAC 24/7. Expire dans 55 jours.</field>
+        <field name="equipment_ids" eval="[(4, ref('eq_004')), (4, ref('eq_012'))]"/>
     </record>
 
-    <!-- contrat_004 — Support HP — déjà expiré et renouvelé (scenario renew) -->
+    <!-- contrat_004 — HP Care Pack — EXPIRÉ (date passée) -->
     <record id="contrat_004" model="it.contrat">
-        <field name="name">Contrat Maintenance HP Care Pack (ancien)</field>
+        <field name="name">Contrat Maintenance HP Care Pack</field>
         <field name="partner_id" ref="partner_hp"/>
         <field name="date_start">2024-01-01</field>
         <field name="date_end" eval="(DateTime.now() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
         <field name="amount">1200000</field>
-        <field name="state">renewed</field>
-        <field name="notes">Ancien contrat remplacé par HP Care Pack 2025. Historique conservé.</field>
+        <field name="state">expired</field>
+        <field name="notes">EXPIRÉ : Ancien contrat HP arrivé à expiration. Renouvellement en attente de validation.</field>
     </record>
 
-    <!-- contrat_005 — Fortinet — expiré (scenario expired) -->
+    <!-- contrat_005 — Fortinet UTM — RENOUVELÉ -->
     <record id="contrat_005" model="it.contrat">
         <field name="name">Contrat Pare-feu Fortinet UTM</field>
         <field name="partner_id" ref="partner_fortinet"/>
         <field name="date_start">2024-06-01</field>
         <field name="date_end" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
         <field name="amount">2500000</field>
-        <field name="state">expired</field>
-        <field name="notes">Contrat expiré. Renouvellement en attente de validation.</field>
+        <field name="state">renewed</field>
+        <field name="notes">RENOUVELÉ : Contrat renouvelé pour 2026-2027. Nouveau contrat signé avec Fortinet.</field>
         <field name="equipment_ids" eval="[(4, ref('eq_009'))]"/>
     </record>
 
-    <!-- =========================== -->
-    <!-- INTERVENTIONS                -->
-    <!-- =========================== -->
+    <!-- ============================================================ -->
+    <!-- INTERVENTIONS (10)                                            -->
+    <!-- ============================================================ -->
 
+    <!-- == CORRECTIVES TERMINÉES (4) == -->
+
+    <!-- interv_001 — Corrective — Remplacement batterie HP ProBook — coût 45 000 FCFA -->
     <record id="interv_001" model="it.intervention">
-        <field name="name">Remplacement batterie HP ProBook</field>
+        <field name="name">Remplacement batterie HP ProBook 450</field>
         <field name="equipment_id" ref="eq_002"/>
         <field name="type">corrective</field>
         <field name="technician_id" ref="emp_bamba"/>
@@ -377,21 +510,10 @@
         <field name="date_end" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d 11:30:00')"/>
         <field name="cost">45000</field>
         <field name="state">done</field>
-        <field name="report">Remplacement batterie Li-Ion 45Wh. Test autonomie : 5h confirmées.</field>
+        <field name="report">Remplacement batterie Li-Ion 45Wh. Test autonomie : 5h confirmées. Batterie d'origine HS remplacée sous garantie.</field>
     </record>
 
-    <record id="interv_002" model="it.intervention">
-        <field name="name">Maintenance préventive serveur Dell R740</field>
-        <field name="equipment_id" ref="eq_003"/>
-        <field name="type">preventive</field>
-        <field name="technician_id" ref="emp_kone"/>
-        <field name="date_start" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d 07:00:00')"/>
-        <field name="date_end" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d 12:00:00')"/>
-        <field name="cost">120000</field>
-        <field name="state">done</field>
-        <field name="report">Nettoyage interne, vérification RAID, mise à jour firmware iDRAC 5.10.</field>
-    </record>
-
+    <!-- interv_003 — Corrective — Remplacement disque dur HP ProLiant — coût 280 000 FCFA -->
     <record id="interv_003" model="it.intervention">
         <field name="name">Remplacement disque dur HP ProLiant DL380</field>
         <field name="equipment_id" ref="eq_008"/>
@@ -401,105 +523,231 @@
         <field name="date_end" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d 14:00:00')"/>
         <field name="cost">280000</field>
         <field name="state">done</field>
-        <field name="report">Disque SAS 1.8To remplacé. Reconstruction RAID en cours (72h estimées).</field>
+        <field name="report">Disque SAS 1.8To remplacé sur le serveur de backup Bouaké. Reconstruction RAID en cours (72h estimées). Sauvegarde externalisée en attendant.</field>
     </record>
 
-    <record id="interv_004" model="it.intervention">
-        <field name="name">Mise à jour firmware Fortinet FortiGate</field>
+    <!-- interv_006 — Corrective — Réparation écran Dell Latitude 5540 — coût 275 000 FCFA -->
+    <record id="interv_006" model="it.intervention">
+        <field name="name">Réparation écran Dell Latitude 5540</field>
+        <field name="equipment_id" ref="eq_013"/>
+        <field name="type">corrective</field>
+        <field name="technician_id" ref="emp_kone"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d 10:00:00')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d 16:30:00')"/>
+        <field name="cost">275000</field>
+        <field name="state">done</field>
+        <field name="report">Écran 15.6 pouces Full HD remplacé (LCD endommagé après chute). Test d'affichage OK. Calibration effectuée.</field>
+    </record>
+
+    <!-- interv_007 — Corrective — Remplacement alimentation FortiGate — coût 150 000 FCFA -->
+    <record id="interv_007" model="it.intervention">
+        <field name="name">Remplacement alimentation FortiGate 60F</field>
         <field name="equipment_id" ref="eq_009"/>
+        <field name="type">corrective</field>
+        <field name="technician_id" ref="emp_nguessan"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(days=7)).strftime('%Y-%m-%d 20:00:00')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(days=7)).strftime('%Y-%m-%d 22:00:00')"/>
+        <field name="cost">150000</field>
+        <field name="state">done</field>
+        <field name="report">Bloc alimentation FortiGate 60F remplacé (surchauffe détectée). Redémarrage du pare-feu effectué sans incident. Journal d'activité vérifié.</field>
+    </record>
+
+    <!-- == PRÉVENTIVES TERMINÉES (3) == -->
+
+    <!-- interv_002 — Préventive — Maintenance Dell R740 — coût 120 000 FCFA -->
+    <record id="interv_002" model="it.intervention">
+        <field name="name">Maintenance préventive serveur Dell R740</field>
+        <field name="equipment_id" ref="eq_003"/>
+        <field name="type">preventive</field>
+        <field name="technician_id" ref="emp_kone"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d 07:00:00')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d 12:00:00')"/>
+        <field name="cost">120000</field>
+        <field name="state">done</field>
+        <field name="report">Nettoyage interne, vérification RAID, mise à jour firmware iDRAC 5.10. Température OK. Ventilateurs opérationnels.</field>
+    </record>
+
+    <!-- interv_008 — Préventive — Nettoyage switch Cisco — coût 95 000 FCFA -->
+    <record id="interv_008" model="it.intervention">
+        <field name="name">Nettoyage switch Cisco Catalyst 2960-X</field>
+        <field name="equipment_id" ref="eq_004"/>
         <field name="type">preventive</field>
         <field name="technician_id" ref="emp_nguessan"/>
-        <field name="date_start" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d 22:00:00')"/>
-        <field name="date_end" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d 23:30:00')"/>
-        <field name="cost">0</field>
+        <field name="date_start" eval="(DateTime.now() - timedelta(days=20)).strftime('%Y-%m-%d 08:00:00')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(days=20)).strftime('%Y-%m-%d 10:30:00')"/>
+        <field name="cost">95000</field>
         <field name="state">done</field>
-        <field name="report">FortiOS mis à jour vers 7.4.3. Zéro interruption de service.</field>
+        <field name="report">Nettoyage ventilateurs, vérification VLAN, mise à jour IOS 15.2(7). Aucune anomalie détectée.</field>
     </record>
 
+    <!-- interv_009 — Préventive — Inspection UPS APC — coût 60 000 FCFA -->
+    <record id="interv_009" model="it.intervention">
+        <field name="name">Inspection UPS APC Smart-UPS 1500</field>
+        <field name="equipment_id" ref="eq_015"/>
+        <field name="type">preventive</field>
+        <field name="technician_id" ref="emp_bamba"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(days=12)).strftime('%Y-%m-%d 09:00:00')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(days=12)).strftime('%Y-%m-%d 10:00:00')"/>
+        <field name="cost">60000</field>
+        <field name="state">done</field>
+        <field name="report">Test batterie UPS, vérification charge, calibration effectuée. Autonomie mesurée : 45 min. Batterie en bon état.</field>
+    </record>
+
+    <!-- == PLANIFIÉES (3) == -->
+
+    <!-- interv_005 — Planifiée — Diagnostic Cisco Catalyst (préventif, future) -->
     <record id="interv_005" model="it.intervention">
         <field name="name">Diagnostic Cisco Catalyst 2960-X</field>
         <field name="equipment_id" ref="eq_004"/>
         <field name="type">preventive</field>
         <field name="technician_id" ref="emp_nguessan"/>
-        <field name="date_start" eval="(DateTime.now() + timedelta(days=3)).strftime('%Y-%m-%d 08:00:00')"/>
-        <field name="date_end" eval="(DateTime.now() + timedelta(days=3)).strftime('%Y-%m-%d 10:00:00')"/>
+        <field name="date_start" eval="(DateTime.now() + timedelta(days=10)).strftime('%Y-%m-%d 08:00:00')"/>
+        <field name="date_end" eval="(DateTime.now() + timedelta(days=10)).strftime('%Y-%m-%d 10:00:00')"/>
         <field name="cost">35000</field>
         <field name="state">planned</field>
         <field name="report">Diagnostic planifié avant renouvellement contrat SmartNet.</field>
     </record>
 
-    <!-- =========================== -->
-    <!-- ALERTES (démonstration)       -->
-    <!-- =========================== -->
+    <!-- interv_010 — Planifiée urgente — Intervention corrective Dell OptiPlex (dans 2 jours) -->
+    <record id="interv_010" model="it.intervention">
+        <field name="name">URGENT — Problème surchauffe Dell OptiPlex 7090</field>
+        <field name="equipment_id" ref="eq_001"/>
+        <field name="type">corrective</field>
+        <field name="technician_id" ref="emp_bamba"/>
+        <field name="date_start" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d 14:00:00')"/>
+        <field name="cost">1</field>
+        <field name="state">planned</field>
+        <field name="report">Intervention prioritaire : Problème de surchauffe signalé par l'utilisateur. Intervention sous garantie constructeur. Coût symbolique 1 FCFA.</field>
+    </record>
 
-    <!-- Alerte garantie — équipement Dell OptiPlex (garantie expire dans 8j) -->
+    <!-- interv_011 — Planifiée — Maintenance préventive serveur backup Bouaké (dans 15 jours) -->
+    <record id="interv_011" model="it.intervention">
+        <field name="name">Maintenance préventive serveur backup HP DL380</field>
+        <field name="equipment_id" ref="eq_008"/>
+        <field name="type">preventive</field>
+        <field name="technician_id" ref="emp_kone"/>
+        <field name="date_start" eval="(DateTime.now() + timedelta(days=15)).strftime('%Y-%m-%d 07:00:00')"/>
+        <field name="date_end" eval="(DateTime.now() + timedelta(days=15)).strftime('%Y-%m-%d 11:00:00')"/>
+        <field name="cost">75000</field>
+        <field name="state">planned</field>
+        <field name="report">Vérification complète du serveur après remplacement disque dur. Test RAID et sauvegarde.</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- ALERTES (10)                                                  -->
+    <!-- ============================================================ -->
+
+    <!-- Alerte garantie — eq_001 (garantie +5j, URGENT) -->
     <record id="alerte_001" model="it.alerte">
-        <field name="name">Garantie Dell OptiPlex 7090 — Expire bientôt</field>
+        <field name="name">URGENT — Garantie Dell OptiPlex expire dans 5 jours</field>
         <field name="type">warranty</field>
         <field name="equipment_id" ref="eq_001"/>
-        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=8)).strftime('%Y-%m-%d')"/>
+        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=5)).strftime('%Y-%m-%d')"/>
         <field name="state">open</field>
-        <field name="message">La garantie de ce poste arrive à expiration. Prévoir renouvellement ou remplacement.</field>
+        <field name="message">URGENT : La garantie du Dell OptiPlex 7090 (S/N: SN-DELL-00412) arrive à expiration dans 5 jours. Contacter Dell pour renouvellement immédiat.</field>
     </record>
 
-    <!-- Alerte garantie — HP ProBook (garantie expire dans 21j) -->
+    <!-- Alerte garantie — eq_013 (garantie +5j, URGENT) -->
+    <record id="alerte_012" model="it.alerte">
+        <field name="name">URGENT — Garantie Dell Latitude expire dans 5 jours</field>
+        <field name="type">warranty</field>
+        <field name="equipment_id" ref="eq_013"/>
+        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=5)).strftime('%Y-%m-%d')"/>
+        <field name="state">open</field>
+        <field name="message">URGENT : La garantie du Dell Latitude 5540 (S/N: SN-DELL-05540) arrive à expiration dans 5 jours. Intervention en cours sous garantie.</field>
+    </record>
+
+    <!-- Alerte garantie — eq_002 (garantie +20j) -->
     <record id="alerte_002" model="it.alerte">
-        <field name="name">Garantie HP ProBook 450 G9 — Alerte garantie</field>
+        <field name="name">Garantie HP ProBook 450 — expire dans 20 jours</field>
         <field name="type">warranty</field>
         <field name="equipment_id" ref="eq_002"/>
-        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=21)).strftime('%Y-%m-%d')"/>
+        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=20)).strftime('%Y-%m-%d')"/>
         <field name="state">open</field>
-        <field name="message">La garantie de ce portable expire dans 3 semaines.</field>
+        <field name="message">La garantie du HP ProBook 450 G9 (S/N: SN-HP-00287) expire dans 20 jours. Prévoir renouvellement.</field>
     </record>
 
-    <!-- Alerte contrat — Support Dell (expire dans 12j) -->
+    <!-- Alerte garantie — eq_011 (garantie +20j) -->
+    <record id="alerte_013" model="it.alerte">
+        <field name="name">Garantie HP EliteBook 845 — expire dans 20 jours</field>
+        <field name="type">warranty</field>
+        <field name="equipment_id" ref="eq_011"/>
+        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=20)).strftime('%Y-%m-%d')"/>
+        <field name="state">open</field>
+        <field name="message">La garantie du HP EliteBook 845 G10 (S/N: SN-HP-00845) expire dans 20 jours. Anticiper le renouvellement.</field>
+    </record>
+
+    <!-- Alerte contrat — contrat_001 (expire dans 3j, CRITIQUE) -->
     <record id="alerte_003" model="it.alerte">
-        <field name="name">Contrat Dell ProSupport — Expiration imminente</field>
+        <field name="name">CRITIQUE — Contrat Dell ProSupport expire dans 3 jours</field>
         <field name="type">contract</field>
         <field name="contrat_id" ref="contrat_001"/>
-        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=12)).strftime('%Y-%m-%d')"/>
+        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=3)).strftime('%Y-%m-%d')"/>
         <field name="state">open</field>
-        <field name="message">Le contrat de support Dell ProSupport expire dans 12 jours. Contacter Dell pour le renouvellement.</field>
+        <field name="message">CRITIQUE : Le contrat de support Dell ProSupport (2 400 000 FCFA) expire dans 3 jours. Contacter Dell pour renouvellement urgent.</field>
     </record>
 
-    <!-- Alerte contrat — Microsoft 365 (expire dans 28j) -->
+    <!-- Alerte contrat — contrat_002 (expire dans 25j) -->
     <record id="alerte_004" model="it.alerte">
-        <field name="name">Licence Microsoft 365 — Renouvellement à prévoir</field>
+        <field name="name">Licence Microsoft 365 — renouvellement dans 25 jours</field>
         <field name="type">contract</field>
         <field name="contrat_id" ref="contrat_002"/>
-        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=28)).strftime('%Y-%m-%d')"/>
+        <field name="date_expiry" eval="(DateTime.now() + timedelta(days=25)).strftime('%Y-%m-%d')"/>
         <field name="state">open</field>
-        <field name="message">85 licences M365 arrivent à échéance dans 28 jours. Budget renouvellement : 3 600 000 FCFA.</field>
+        <field name="message">85 licences M365 Business Standard arrivent à échéance dans 25 jours. Budget renouvellement : 3 600 000 FCFA.</field>
     </record>
 
-    <!-- Alerte garantie — déjà traitée (scenario done) -->
+    <!-- Alerte contrat — contrat_003 (expire dans 55j — pas d'alerte ouverte, trop loin) -->
+    <!-- Pas d'alerte pour contrat_003 car 55j > 30j du cron -->
+
+    <!-- Alerte garantie — eq_004 (garantie EXPIRÉE -30j, traitée) -->
     <record id="alerte_005" model="it.alerte">
-        <field name="name">Garantie Cisco Catalyst — Traitée</field>
+        <field name="name">Garantie Cisco Catalyst — Expirée (traitée)</field>
         <field name="type">warranty</field>
         <field name="equipment_id" ref="eq_004"/>
-        <field name="date_expiry" eval="(DateTime.now() - timedelta(days=90)).strftime('%Y-%m-%d')"/>
+        <field name="date_expiry" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
         <field name="state">done</field>
-        <field name="message">Garantie renouvelée via contrat SmartNet. Alerte traitée le 22/03/2026.</field>
+        <field name="message">Garantie du switch Cisco Catalyst arrivée à expiration. Pris en charge via contrat SmartNet.</field>
     </record>
 
-    <!-- Alerte contrat — Fortinet expiré (scenario ignored) -->
+    <!-- Alerte garantie — eq_008 (garantie EXPIRÉE -60j, traitée) -->
+    <record id="alerte_014" model="it.alerte">
+        <field name="name">Garantie HP ProLiant DL380 — Expirée (traitée)</field>
+        <field name="type">warranty</field>
+        <field name="equipment_id" ref="eq_008"/>
+        <field name="date_expiry" eval="(DateTime.now() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
+        <field name="state">done</field>
+        <field name="message">Garantie du serveur HP ProLiant DL380 expirée depuis 60 jours. Remplacement hors garantie.</field>
+    </record>
+
+    <!-- Alerte contrat — contrat_005 (Fortinet, renew, traitée) -->
     <record id="alerte_006" model="it.alerte">
-        <field name="name">Contrat Fortinet UTM — Expiré (ignoré)</field>
+        <field name="name">Contrat Fortinet UTM — Renouvelé (traitée)</field>
         <field name="type">contract</field>
         <field name="contrat_id" ref="contrat_005"/>
         <field name="date_expiry" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
-        <field name="state">ignored</field>
-        <field name="message">Contrat expiré. Ignoré car renouvellement en attente de direction.</field>
+        <field name="state">done</field>
+        <field name="message">Contrat Fortinet UTM arrivé à expiration. Renouvellement effectué pour la période 2026-2027.</field>
     </record>
 
-    <!-- Alerte garantie — Acer retraité (scenario equipment déjà retiré) -->
-    <record id="alerte_007" model="it.alerte">
-        <field name="name">Garantie Acer Veriton — Équipement retiré</field>
+    <!-- Alerte contrat — contrat_004 (HP, expired, ignorée) -->
+    <record id="alerte_015" model="it.alerte">
+        <field name="name">Contrat HP Care Pack — Expiré (ignoré)</field>
+        <field name="type">contract</field>
+        <field name="contrat_id" ref="contrat_004"/>
+        <field name="date_expiry" eval="(DateTime.now() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
+        <field name="state">ignored</field>
+        <field name="message">Contrat HP Care Pack expiré. Ignoré — nouveau contrat en cours de négociation avec fournisseur alternatif.</field>
+    </record>
+
+    <!-- Alerte garantie — eq_012 (retraité, garantie EXPIRÉE -90j, traitée) -->
+    <record id="alerte_016" model="it.alerte">
+        <field name="name">Garantie Cisco ISR 4321 — Équipement retiré</field>
         <field name="type">warranty</field>
-        <field name="equipment_id" ref="eq_010"/>
-        <field name="date_expiry" eval="(DateTime.now() - timedelta(days=180)).strftime('%Y-%m-%d')"/>
+        <field name="equipment_id" ref="eq_012"/>
+        <field name="date_expiry" eval="(DateTime.now() - timedelta(days=90)).strftime('%Y-%m-%d')"/>
         <field name="state">done</field>
-        <field name="message">Équipement retiré du parc. Garantie non renouvelée.</field>
+        <field name="message">Routeur Cisco ISR 4321 retiré du parc. Garantie non renouvelée.</field>
     </record>
 
 </odoo>

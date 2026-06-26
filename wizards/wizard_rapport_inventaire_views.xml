@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_rapport_inventaire_form" model="ir.ui.view">
+        <field name="name">it.wizard.rapport.inventaire.form</field>
+        <field name="model">it.wizard.rapport.inventaire</field>
+        <field name="arch" type="xml">
+            <form string="Rapport Inventaire — Filtres">
+                <group>
+                    <field name="filter_type" widget="radio"/>
+                </group>
+                <group invisible="filter_type != 'department'">
+                    <field name="department_id" required="filter_type == 'department'"/>
+                </group>
+                <group invisible="filter_type != 'category'">
+                    <field name="category_id" required="filter_type == 'category'"/>
+                </group>
+                <group invisible="filter_type != 'state'">
+                    <field name="state" required="filter_type == 'state'"/>
+                </group>
+                <footer>
+                    <button name="action_print" type="object"
+                        string="Générer le rapport PDF" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_rapport_inventaire" model="ir.actions.act_window">
+        <field name="name">Rapport Inventaire</field>
+        <field name="res_model">it.wizard.rapport.inventaire</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

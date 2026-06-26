@@ -14,6 +14,11 @@ class WizardReaffectation(models.TransientModel):
 
     def action_confirm(self):
         self.ensure_one()
+        if not self.employee_id.active:
+            raise UserError(
+                f"❌ Impossible de réaffecter à {self.employee_id.name} : "
+                f"Cet employé est archivé. Sélectionnez un employé actif."
+            )
         equipment = self.equipment_id
         if self.employee_id == equipment.employee_id and self.department_id == equipment.department_id:
             raise UserError("L'équipement est déjà affecté à cet employé dans ce département.")

@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class Alerte(models.Model):
@@ -26,17 +26,19 @@ class Alerte(models.Model):
     message = fields.Text(string='Message')
 
     @api.constrains('type', 'equipment_id', 'contrat_id')
-    def _check_references(self):
+    def _check_type_coherence(self):
         for rec in self:
             if rec.type == 'warranty' and not rec.equipment_id:
-                raise UserError(
-                    "Une alerte de type 'Garantie équipement' doit être associée à un équipement. "
-                    "Veuillez renseigner l'équipement concerné."
+                raise ValidationError(
+                    f"❌ Alerte '{rec.name}' : Une alerte de type 'Garantie équipement' "
+                    f"doit obligatoirement référencer un équipement. "
+                    f"Sélectionnez l'équipement concerné."
                 )
             if rec.type == 'contract' and not rec.contrat_id:
-                raise UserError(
-                    "Une alerte de type 'Contrat fournisseur' doit être associée à un contrat. "
-                    "Veuillez renseigner le contrat concerné."
+                raise ValidationError(
+                    f"❌ Alerte '{rec.name}' : Une alerte de type 'Contrat fournisseur' "
+                    f"doit obligatoirement référencer un contrat. "
+                    f"Sélectionnez le contrat concerné."
                 )
 
     @api.constrains('date_expiry')
@@ -57,17 +59,12 @@ class Alerte(models.Model):
             else:
                 rec.days_before = 0
 
-    def action_mark_done(self):
+    def write(self, vals):
         for rec in self:
-            if rec.state != 'open':
-                raise UserError("Seules les alertes ouvertes peuvent être traitées.")
-            rec.state = 'done'
-
-    def action_ignore(self):
-        for rec in self:
-            if rec.state != 'open':
-                raise UserError("Seules les alertes ouvertes peuvent être ignorées.")
-            rec.state = 'ignored'
+            if 'state' in vals and vals['state'] != rec.state:
+                if vals['state'] in ('done', 'ignored') and rec.state != 'open':
+                    raise UserError("Seules les alertes ouvertes peuvent être traitées ou ignorées.")
+        return super().write(vals)
 
     @api.model
     def _cron_check_alerts(self):

@@ -24,10 +24,23 @@
             <menuitem id="menu_it_parc_equipements_list" name="Tous les équipements" action="action_it_equipment" groups="it_parc.group_it_technicien" sequence="10"/>
             <menuitem id="menu_it_parc_categories" name="Catégories" action="action_it_equipment_category" groups="it_parc.group_it_technicien" sequence="20"/>
             <menuitem id="menu_it_parc_import_csv" name="Importer via CSV" action="action_it_wizard_import_csv" groups="it_parc.group_it_manager" sequence="30"/>
+            <menuitem id="menu_rapport_inventaire"
+                name="Rapport inventaire PDF"
+                action="action_wizard_rapport_inventaire"
+                sequence="25"
+                groups="it_parc.group_it_technicien"/>
         </menuitem>
         <menuitem id="menu_it_parc_affectations" name="Affectations" action="action_it_affectation" groups="it_parc.group_it_technicien" sequence="30"/>
-        <menuitem id="menu_it_parc_interventions" name="Interventions" action="action_it_intervention" groups="it_parc.group_it_technicien" sequence="40"/>
+        <menuitem id="menu_it_parc_interventions" name="Interventions" groups="it_parc.group_it_technicien" sequence="40">
+            <menuitem id="menu_it_parc_interventions_list" name="Toutes les interventions" action="action_it_intervention" sequence="10"/>
+            <menuitem id="menu_rapport_maintenances"
+                name="Rapport maintenances PDF"
+                action="action_wizard_rapport_maintenances"
+                sequence="25"
+                groups="it_parc.group_it_technicien"/>
+        </menuitem>
         <menuitem id="menu_it_parc_contrats" name="Contrats fournisseurs" action="action_it_contrat" groups="it_parc.group_it_technicien" sequence="50"/>
+        <menuitem id="menu_it_parc_licences" name="Licences logicielles" action="action_it_licence" groups="it_parc.group_it_technicien" sequence="55"/>
         <menuitem id="menu_it_parc_alertes" name="Alertes" groups="it_parc.group_it_technicien" sequence="60">
             <menuitem id="menu_it_parc_scan_alertes" name="Lancer un scan manuel" action="action_it_wizard_scan_alertes" groups="it_parc.group_it_manager" sequence="10"/>
         </menuitem>
@@ -36,6 +49,7 @@
             <menuitem id="menu_export_couts" name="Synthèse coûts maintenance" sequence="20" action="action_export_couts" groups="it_parc.group_it_manager"/>
             <menuitem id="menu_export_contrats" name="Contrats expirants (60j)" sequence="30" action="action_export_contrats" groups="it_parc.group_it_manager"/>
         </menuitem>
+        <menuitem id="menu_it_parc_historique" name="Historique inventaires" action="action_it_inventaire_snapshot" groups="it_parc.group_it_manager" sequence="65"/>
         <menuitem id="menu_it_parc_configuration" name="Configuration" groups="it_parc.group_it_manager" sequence="99">
             <menuitem id="menu_it_parc_config_categories" name="Catégories" action="action_it_equipment_category" groups="it_parc.group_it_manager" sequence="10"/>
         </menuitem>

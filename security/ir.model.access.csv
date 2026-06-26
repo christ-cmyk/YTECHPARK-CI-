@@ -11,3 +11,16 @@ access_it_contrat_technicien,it.contrat technicien,model_it_contrat,it_parc.grou
 access_it_contrat_manager,it.contrat manager,model_it_contrat,it_parc.group_it_manager,1,1,1,1
 access_it_alerte_technicien,it.alerte technicien,model_it_alerte,it_parc.group_it_technicien,1,0,0,0
 access_it_alerte_manager,it.alerte manager,model_it_alerte,it_parc.group_it_manager,1,1,1,1
+access_it_wizard_rapport_inventaire,it.wizard.rapport.inventaire,model_it_wizard_rapport_inventaire,it_parc.group_it_technicien,1,1,1,0
+access_it_wizard_rapport_maintenances,it.wizard.rapport.maintenances,model_it_wizard_rapport_maintenances,it_parc.group_it_technicien,1,1,1,0
+access_it_licence_technicien,it.licence technicien,model_it_licence,it_parc.group_it_technicien,1,0,0,0
+access_it_licence_manager,it.licence manager,model_it_licence,it_parc.group_it_manager,1,1,1,1
+access_it_inventaire_snapshot_manager,it.inventaire.snapshot,model_it_inventaire_snapshot,it_parc.group_it_manager,1,1,1,1
+access_it_inventaire_snapshot_line_manager,it.inventaire.snapshot.line,model_it_inventaire_snapshot_line,it_parc.group_it_manager,1,1,1,1
+access_it_inventaire_snapshot_technicien,it.inventaire.snapshot technicien,model_it_inventaire_snapshot,it_parc.group_it_technicien,1,0,0,0
+access_it_inventaire_snapshot_line_technicien,it.inventaire.snapshot.line technicien,model_it_inventaire_snapshot_line,it_parc.group_it_technicien,1,0,0,0
+access_it_wizard_reaffectation_manager,it.wizard.reaffectation,model_it_wizard_reaffectation,it_parc.group_it_manager,1,1,1,0
+access_it_wizard_renouvellement_manager,it.wizard.renouvellement,model_it_wizard_renouvellement,it_parc.group_it_manager,1,1,1,0
+access_it_wizard_scan_alertes_manager,it.wizard.scan.alertes,model_it_wizard_scan_alertes,it_parc.group_it_manager,1,1,1,0
+access_it_wizard_import_csv_manager,it.wizard.import.csv,model_it_wizard_import_csv,it_parc.group_it_manager,1,1,1,0
+access_it_wizard_reaffectation_technicien,it.wizard.reaffectation,model_it_wizard_reaffectation,it_parc.group_it_technicien,1,1,1,0

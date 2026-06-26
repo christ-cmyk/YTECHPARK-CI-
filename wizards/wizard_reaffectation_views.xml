@@ -7,7 +7,7 @@
             <form string="Réaffecter l'équipement">
                 <group>
                     <field name="equipment_id"/>
-                    <field name="employee_id"/>
+                    <field name="employee_id" domain="[('active', '=', True)]"/>
                     <field name="department_id"/>
                     <field name="reason"/>
                     <field name="date_start"/>

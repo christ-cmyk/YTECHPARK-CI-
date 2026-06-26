@@ -7,7 +7,8 @@
             <form>
                 <header>
                     <field name="state" widget="statusbar"/>
-                    <button name="action_open_renouvellement_wizard" type="object" string="Renouveler" invisible="state not in ('active', 'expired')" class="btn-primary"/>
+                    <button name="action_open_renouvellement_wizard" type="object" string="Renouveler" invisible="renewal_blocked or state not in ('active', 'expired')" class="btn-primary"/>
+                    <button name="action_open_renouvellement_wizard" string="Renouvellement récent (moins de 5 jours)" type="object" invisible="not renewal_blocked" class="btn-secondary" disabled="1" readonly="1"/>
                 </header>
                 <sheet>
                     <group>
@@ -17,6 +18,7 @@
                         <field name="date_start"/>
                         <field name="date_end"/>
                         <field name="days_remaining" readonly="1" decoration-danger="days_remaining &lt; 30"/>
+                        <field name="renewal_blocked" invisible="1"/>
                         <field name="amount"/>
                         <field name="equipment_ids" widget="many2many_tags"/>
                     </group>

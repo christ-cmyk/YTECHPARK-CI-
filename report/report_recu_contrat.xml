@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_recu_contrat" model="ir.actions.report">
+        <field name="name">Reçu de contrat</field>
+        <field name="model">it.contrat</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_parc.report_recu_contrat_template</field>
+        <field name="report_file">it_parc.report_recu_contrat_template</field>
+        <field name="binding_model_id" ref="model_it_contrat"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_recu_contrat_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h2 style="color:#1A3A5C; border-bottom: 2px solid #1A3A5C; padding-bottom:8px;">
+                                    REÇU DE CONTRAT FOURNISSEUR
+                                </h2>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span class="badge badge-secondary" style="font-size:14px; padding:6px 16px;">
+                                    N° <t t-esc="o.name"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <h4 style="color:#185FA5; margin-top:16px;">Informations du contrat</h4>
+                        <table class="table table-sm table-bordered">
+                            <tr>
+                                <th style="width:35%; background:#f0f4f8;">Intitulé</th>
+                                <td><span t-field="o.name"/></td>
+                            </tr>
+                            <tr>
+                                <th style="background:#f0f4f8;">Fournisseur</th>
+                                <td><span t-field="o.partner_id"/></td>
+                            </tr>
+                            <tr>
+                                <th style="background:#f0f4f8;">Période</th>
+                                <td>
+                                    <span t-field="o.date_start"/> → <span t-field="o.date_end"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="background:#f0f4f8;">Montant</th>
+                                <td><span t-field="o.amount"/> FCFA</td>
+                            </tr>
+                            <tr>
+                                <th style="background:#f0f4f8;">État</th>
+                                <td>
+                                    <span t-esc="dict(o.fields_get(['state'])['state']['selection'])[o.state]"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="background:#f0f4f8;">Jours restants</th>
+                                <td>
+                                    <t t-if="o.days_remaining &lt; 0">
+                                        <span style="color: #dc3545; font-weight: bold;">
+                                            Expiré depuis <t t-esc="abs(o.days_remaining)"/> jours
+                                        </span>
+                                    </t>
+                                    <t t-elif="o.days_remaining &lt; 30">
+                                        <span style="color: #dc3545; font-weight: bold;">
+                                            <t t-esc="o.days_remaining"/> jours restants
+                                        </span>
+                                    </t>
+                                    <t t-elif="o.days_remaining &lt; 60">
+                                        <span style="color: #fd7e14; font-weight: bold;">
+                                            <t t-esc="o.days_remaining"/> jours restants
+                                        </span>
+                                    </t>
+                                    <t t-else="">
+                                        <span style="color: #198754; font-weight: bold;">
+                                            <t t-esc="o.days_remaining"/> jours restants
+                                        </span>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h4 style="color:#185FA5; margin-top:16px;">Équipements couverts</h4>
+                        <t t-if="o.equipment_ids">
+                            <table class="table table-sm table-bordered table-striped">
+                                <thead style="background:#1A3A5C; color:white;">
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Catégorie</th>
+                                        <th>Numéro de série</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.equipment_ids" t-as="eq">
+                                        <td><span t-field="eq.name"/></td>
+                                        <td><span t-field="eq.category_id"/></td>
+                                        <td><span t-field="eq.serial_number"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p class="text-muted">Aucun équipement associé à ce contrat.</p>
+                        </t>
+
+                        <t t-if="o.notes">
+                            <h4 style="color:#185FA5; margin-top:16px;">Notes</h4>
+                            <p><span t-field="o.notes"/></p>
+                        </t>
+
+                        <p class="text-muted" style="margin-top:32px; font-size:10px; border-top:1px solid #ccc; padding-top:8px;">
+                            Document généré par le système IT Parc — <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y à %H:%M')"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

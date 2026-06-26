@@ -6,9 +6,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="state" widget="statusbar"/>
-                    <button name="action_done" type="object" string="Terminer" invisible="state != 'planned'" class="btn-primary"/>
-                    <button name="action_back_planned" type="object" string="Rouvrir" invisible="state != 'done'" class="btn-default"/>
+                    <field name="state" widget="statusbar" statusbar_clickable="1"/>
                 </header>
                 <sheet>
                     <group>

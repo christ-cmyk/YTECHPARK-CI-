@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class Contrat(models.Model):
@@ -20,30 +20,32 @@ class Contrat(models.Model):
         ('expired', 'Expiré'),
         ('renewed', 'Renouvelé'),
     ], default='active', tracking=True)
+    renewal_blocked = fields.Boolean(
+        string='Renouvellement bloqué',
+        compute='_compute_renewal_blocked',
+        store=False
+    )
     notes = fields.Text()
 
     @api.constrains('date_start', 'date_end')
     def _check_dates(self):
         for rec in self:
-            if rec.date_end and rec.date_start:
-                if rec.date_end < rec.date_start:
-                    raise UserError(
-                        "La date de fin du contrat ne peut pas être antérieure à la date de début. "
-                        "Veuillez vérifier les dates du contrat."
-                    )
-                if rec.date_start > fields.Date.today():
-                    raise UserError(
-                        f"La date de début du contrat ({rec.date_start}) ne peut pas être dans le futur. "
-                        "Veuillez saisir une date valide."
+            if rec.date_start and rec.date_end:
+                if rec.date_end <= rec.date_start:
+                    raise ValidationError(
+                        f"❌ Contrat '{rec.name}' : La date de fin ({rec.date_end}) "
+                        f"doit être postérieure à la date de début ({rec.date_start}). "
+                        f"Un contrat ne peut pas se terminer avant de commencer."
                     )
 
     @api.constrains('amount')
     def _check_amount(self):
         for rec in self:
-            if rec.amount and rec.amount < 0:
-                raise UserError(
-                    "Le montant du contrat ne peut pas être négatif. "
-                    "Veuillez saisir un montant valide."
+            if rec.amount <= 0:
+                raise ValidationError(
+                    f"❌ Contrat '{rec.name}' : Le montant ({rec.amount} FCFA) "
+                    f"doit être supérieur à 0 FCFA. "
+                    f"Renseignez le montant réel du contrat fournisseur."
                 )
 
     @api.constrains('state', 'date_end')
@@ -55,6 +57,15 @@ class Contrat(models.Model):
                     f"({rec.date_end.strftime('%d/%m/%Y')}) est déjà dépassée. "
                     "Veuillez mettre à jour l'état du contrat (Expiré ou Renouvelé)."
                 )
+
+    @api.depends('state', 'date_start')
+    def _compute_renewal_blocked(self):
+        for rec in self:
+            if rec.state == 'renewed' and rec.date_start:
+                days_since_renewal = (fields.Date.today() - rec.date_start).days
+                rec.renewal_blocked = days_since_renewal < 5
+            else:
+                rec.renewal_blocked = False
 
     @api.depends('date_end')
     def _compute_days_remaining(self):
